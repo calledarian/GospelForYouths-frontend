@@ -1,0 +1,92 @@
+.home-page {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.hero-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #ba33d4, #bfdbfe);
+    padding: 40px;
+    border-radius: 20px;
+    color: white;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-bottom: 70px;
+  }
+  
+  .hero-text {
+    max-width: 500px;
+  }
+  
+  .hero-text h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .hero-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  
+  .hero-text p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+  
+  .cta-button {
+    background-color: white;
+    color: #1e3a8a;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  
+  .cta-button:hover {
+    background-color: #e0e7ff;
+  }
+  
+  .support-button {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #1e3a8a;
+    color: white;
+    padding: 12px 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .support-mes {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    border-radius: 16px;
+  }
+  
+  .support-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #1e3a8a;
+  }
+  
+  .support-subtext {
+    font-size: 1rem;
+    color: #444;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  
+  .support-button:hover {
+    background-color: #374bbf;
+  }
+  

@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <div className="footer">
             <div className="footer-text">
-                Gospel For Youths @2025
+                © Copyright 2025 Gospel For Youths
             </div>
         </div>
     )

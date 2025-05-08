@@ -4,6 +4,8 @@ import Home from './pages/home';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Videos from './pages/videos';
+import Contact from './pages/contact';
+import Gift from './pages/gift';
 
 
 
@@ -15,6 +17,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/videos' element={<Videos />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/gift' element={<Gift />} />
+
+
         </Routes>
         <Footer />
       </div>

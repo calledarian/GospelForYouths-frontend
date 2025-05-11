@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/navigation.css';
-import GospelLogo from '../images/Gospel.png';
+import GospelLogo from '../images/gospel.png';
 
 export default function Navigation() {
     const [open, setOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function Navigation() {
                 <Link to="/videos" onClick={() => setOpen(false)}>Videos</Link>
                 <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
                 <Link to="/gift" onClick={() => setOpen(false)}>Gift</Link>
+                <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>
             </div>
         </nav>
     );

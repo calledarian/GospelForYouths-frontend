@@ -1,0 +1,151 @@
+/* VideoGallery.css */
+
+.video-gallery-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .gallery-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  
+  .video-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  .video-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 16px;
+    margin: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .video-frame-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .video-frame-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  
+  .video-details {
+    padding: 16px;
+  }
+  
+  .video-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  
+  .youtube-link {
+    display: inline-block;
+    color: #ff0000;
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s;
+  }
+  
+  .youtube-link:hover {
+    color: #cc0000;
+    text-decoration: underline;
+  }
+  
+  .no-video {
+    background-color: #f8f8f8;
+    padding: 30px;
+    text-align: center;
+    color: #888;
+  }
+  
+  /* Loading state */
+  .loading-container {
+    padding: 40px;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+  }
+  
+  /* Error state */
+  .error-container {
+    padding: 24px;
+    background-color: #fff5f5;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+  
+  .error-container h2 {
+    color: #e53e3e;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+  
+  .error-message {
+    color: #c53030;
+    font-weight: 500;
+  }
+  
+  /* Empty state */
+  .empty-container {
+    padding: 40px;
+    text-align: center;
+    background-color: #f9fafb;
+    border-radius: 8px;
+  }
+  
+  .empty-container h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #4a5568;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .video-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .gallery-title {
+      font-size: 24px;
+    }
+  }

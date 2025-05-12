@@ -1,19 +1,11 @@
-import React from 'react';
 import '../styles/home.css';
 import { Link } from 'react-router-dom';
+import Banner from '../components/Banner';
 
 const Home = () => {
     return (
         <div className="home-page">
-            <section className="hero-home">
-                <div className="hero-text">
-                    <h4>New Video</h4>
-                    <h1>Daniel and the Lion’s Den</h1>
-                    <p>Standing Strong in Faith</p>
-                    <Link to="/videos" className="cta-button">Daniel Chapter 6</Link>
-                </div>
-            </section>
-
+            <Banner />
             <div className="support-mes">
                 <h2 className="support-title">Bringing Bible Stories to Life for the Youths</h2>
                 <p className="support-subtext">

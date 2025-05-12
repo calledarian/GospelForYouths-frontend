@@ -3,14 +3,34 @@ import '../styles/AdminDashboard.css';
 import axios from 'axios';
 
 function AdminDashboard() {
+
+    const apiUrl = process.env.REACT_APP_API_URL;
+
     const [isLoading, setIsLoading] = useState(true);
     const [videos, setVideos] = useState([]);
     const [title, setTitle] = useState('');
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
 
-    const apiUrl = process.env.REACT_APP_API_URL;
-    console.log("API URL:", apiUrl);
+    const [bannerTitle, setBannerTitle] = useState('');
+    const [bannerStatement, setBannerStatement] = useState('');
+    const [banner, setBanner] = useState([]);
+
+    useEffect(() => {
+        const fetchBanner = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.get(`${apiUrl}/banner`);
+                setBanner(response.data);
+            } catch (err) {
+                console.error("Failed to fetch the banner", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchBanner();
+    }, [apiUrl]);
 
     // Function to fetch videos from the API
     const fetchVideos = useCallback(async () => {
@@ -34,15 +54,45 @@ function AdminDashboard() {
         }
     }, [apiUrl]);
 
-    // UseEffect to fetch videos when the component mounts
     useEffect(() => {
         fetchVideos();
     }, [fetchVideos]);
 
-    // Function to create a new video
+
+    const changeBanner = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+
+        try {
+            setIsLoading(true);
+            await axios.put(
+                `${apiUrl}/banner`,
+                {
+                    bannerTitle,
+                    bannerStatement
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            // Reset the input fields after successful API request
+            setBannerTitle('');
+            setBannerStatement('');
+            window.location.reload();
+        } catch (error) {
+            console.error('ERROR changing banner:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+
     const createVideo = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token'); // Retrieve JWT from localStorage
+        const token = localStorage.getItem('token');
 
         try {
             setIsLoading(true);
@@ -55,7 +105,7 @@ function AdminDashboard() {
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}` // Include the JWT token in Authorization header
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
@@ -70,9 +120,8 @@ function AdminDashboard() {
         }
     };
 
-    // Function to delete a video
     const deleteVideo = async (id) => {
-        const token = localStorage.getItem('token'); // Retrieve JWT from localStorage
+        const token = localStorage.getItem('token');
 
         if (!window.confirm("Are you sure you want to delete this video?")) return;
 
@@ -82,11 +131,11 @@ function AdminDashboard() {
                 `${apiUrl}/videos/${id}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}` // Include the JWT token in Authorization header
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
-            fetchVideos(); // Fetch updated videos after deleting
+            fetchVideos();
         } catch (error) {
             console.error('Error deleting video:', error);
         } finally {
@@ -94,7 +143,6 @@ function AdminDashboard() {
         }
     };
 
-    // Function to extract YouTube video ID from URL
     const extractYouTubeId = (url) => {
         if (!url) return null;
 
@@ -104,20 +152,19 @@ function AdminDashboard() {
         return match && match[1] ? match[1] : null;
     };
 
-    // Logout function
     const logout = () => {
         localStorage.removeItem('token'); // Remove the JWT token from localStorage
         window.location.href = '/login'; // Redirect to login page
     };
-
     return (
         <div className="admin-dashboard">
-            <header className="dashboard-header">
+            <div className="dashboard-header">
                 <h1>Admin Dashboard</h1>
                 <button onClick={logout}>Logout</button>
-            </header>
-            <div className="dashboard-grid">
-                <section className="form-section">
+            </div>
+
+            <div className="dashboard-content">
+                <div className="add-video-section">
                     <h2>Add Video</h2>
                     <form onSubmit={createVideo} className="video-form">
                         <div className="form-group">
@@ -163,9 +210,9 @@ function AdminDashboard() {
                             {isLoading ? 'Saving...' : 'Add Video'}
                         </button>
                     </form>
-                </section>
+                </div>
 
-                <section className="videos-section">
+                <div className="video-management">
                     <h2>Manage Videos</h2>
                     {isLoading && <div className="loading">Loading videos...</div>}
 
@@ -182,8 +229,10 @@ function AdminDashboard() {
 
                                 return (
                                     <div key={video.id} className="video-item">
-                                        <div className="video-info">
-                                            <h3>{video.title}</h3>
+                                        <div className="video-content">
+                                            <div className="video-header">
+                                                <h3>{video.title}</h3>
+                                            </div>
 
                                             {videoId && (
                                                 <div className="video-thumbnail">
@@ -194,7 +243,7 @@ function AdminDashboard() {
                                                 </div>
                                             )}
 
-                                            <div className="video-meta">
+                                            <div className="video-details">
                                                 <a
                                                     href={video.url}
                                                     target="_blank"
@@ -205,28 +254,67 @@ function AdminDashboard() {
                                                 </a>
 
                                                 {video.description && (
-                                                    <p className="video-description">{video.description}</p>
+                                                    <div className="video-description">
+                                                        {video.description}
+                                                    </div>
                                                 )}
 
-                                                <div className="video-id">ID: {video.id}</div>
+                                                <div className="video-id">
+                                                    ID: {video.id}
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div className="video-actions">
-                                            <button
-                                                onClick={() => deleteVideo(video.id)}
-                                                className="btn btn-danger"
-                                                disabled={isLoading}
-                                            >
-                                                Delete
-                                            </button>
+                                            <div className="video-actions">
+                                                <button
+                                                    onClick={() => deleteVideo(video.id)}
+                                                    className="btn btn-danger"
+                                                    disabled={isLoading}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 );
                             })}
                         </div>
                     )}
-                </section>
+                </div>
+
+                <div className="banner-management">
+                    <h2>Change Current Banner</h2>
+                    <form onSubmit={changeBanner} className="banner-form">
+                        <div className="form-group">
+                            <label htmlFor="banner-title">Banner Title</label>
+                            <input
+                                id="banner-title"
+                                type="text"
+                                value={bannerTitle}
+                                onChange={(e) => setBannerTitle(e.target.value)}
+                                placeholder={`Current title is: ${banner.bannerTitle}`}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="banner-statement">Banner Statement</label>
+                            <textarea
+                                id="banner-statement"
+                                value={bannerStatement}
+                                onChange={(e) => setBannerStatement(e.target.value)}
+                                placeholder={`Current statement is: ${banner.bannerStatement}`}
+                                rows="3"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Saving...' : 'Change'}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );

@@ -16,12 +16,10 @@ export default function LoginPage() {
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password: password }),
+                body: JSON.stringify({ username, password }),
             });
 
-            if (!response.ok) {
-                throw new Error('Invalid username or password');
-            }
+            if (!response.ok) throw new Error('Invalid username or password');
 
             const data = await response.json();
             localStorage.setItem('token', data.access_token);
@@ -34,22 +32,29 @@ export default function LoginPage() {
     return (
         <div style={{
             minHeight: '100vh',
+            backgroundImage: 'url("https://png.pngtree.com/background/20230611/original/pngtree-an-old-path-through-a-forest-picture-image_3171764.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#f0f0f0'
+            justifyContent: 'center'
         }}>
             <form
                 onSubmit={handleLogin}
                 style={{
-                    backgroundColor: '#fff',
-                    padding: '30px',
-                    borderRadius: '8px',
-                    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-                    width: '300px'
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    backdropFilter: 'blur(7px)',
+                    borderRadius: '12px',
+                    padding: '40px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                    width: '300px',
+                    color: 'black',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '15px'
                 }}
             >
-                <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Admin Login</h2>
+                <h2 style={{ textAlign: 'center', color: 'white', fontSize: "35px" }}>Admin Login</h2>
 
                 <input
                     type="text"
@@ -58,11 +63,12 @@ export default function LoginPage() {
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     style={{
-                        width: '100%',
                         padding: '10px',
-                        marginBottom: '15px',
-                        borderRadius: '4px',
-                        border: '1px solid #ccc'
+                        borderRadius: '6px',
+                        border: '1px solid gray',
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                        color: 'black',
+                        outline: 'none'
                     }}
                 />
 
@@ -73,28 +79,38 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     style={{
-                        width: '100%',
                         padding: '10px',
-                        marginBottom: '15px',
-                        borderRadius: '4px',
-                        border: '1px solid #ccc'
+                        borderRadius: '6px',
+                        border: '1px solid gray',
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                        color: 'black',
+                        outline: 'none'
                     }}
                 />
 
                 {error && (
-                    <p style={{ color: 'red', fontSize: '14px', marginBottom: '10px' }}>{error}</p>
+                    <div style={{
+                        color: 'red',
+                        backgroundColor: 'mistyrose',
+                        padding: '8px',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        textAlign: 'center'
+                    }}>
+                        {error}
+                    </div>
                 )}
 
                 <button
                     type="submit"
                     style={{
-                        width: '100%',
                         padding: '10px',
-                        backgroundColor: '#007BFF',
+                        backgroundColor: '#4a5568',
                         color: 'white',
                         border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer'
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
                     }}
                 >
                     Login
